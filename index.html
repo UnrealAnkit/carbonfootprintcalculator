@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Carbon Footprint Calculator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Advanced Carbon Footprint Calculator</h1>
+        </header>
+        <main>
+            <section id="user-type-selection">
+                <h2>Select User Type</h2>
+                <button id="individual-btn" aria-label="Calculate for Individual">Individual</button>
+                <button id="company-btn" aria-label="Calculate for Company">Company</button>
+            </section>
+
+            <section id="individual-form" class="hidden">
+                <h2>Individual Carbon Footprint Calculator</h2>
+                <form id="individual-carbon-form">
+                    <fieldset>
+                        <legend>Transport</legend>
+                        <label for="vehicle-type">Vehicle Type:</label>
+                        <select id="vehicle-type" name="vehicle-type" required>
+                            <option value="">Select vehicle type</option>
+                            <option value="car">Car (Gasoline)</option>
+                            <option value="electric-car">Car (Electric)</option>
+                            <option value="hybrid-car">Car (Hybrid)</option>
+                            <option value="bus">Bus</option>
+                            <option value="bike">Bicycle</option>
+                            <option value="walk">Walk</option>
+                        </select>
+                        <label for="distance">Distance (km/day):</label>
+                        <input type="number" id="distance" name="distance" required min="0">
+                        <label for="frequency">Frequency:</label>
+                        <select id="frequency" name="frequency" required>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Electricity Usage</legend>
+                        <label for="electricity">Monthly Electricity Usage (kWh):</label>
+                        <input type="number" id="electricity" name="electricity" required min="0">
+                        <label for="energy-source">Energy Source:</label>
+                        <select id="energy-source" name="energy-source" required>
+                            <option value="coal">Coal</option>
+                            <option value="natural-gas">Natural Gas</option>
+                            <option value="solar">Solar</option>
+                            <option value="wind">Wind</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Heating/Cooling</legend>
+                        <label for="heating-type">Heating Fuel Type:</label>
+                        <select id="heating-type" name="heating-type" required>
+                            <option value="gas">Gas</option>
+                            <option value="electric">Electric</option>
+                            <option value="oil">Oil</option>
+                        </select>
+                        <label for="heating-usage">Monthly Usage:</label>
+                        <input type="number" id="heating-usage" name="heating-usage" required min="0">
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Waste Production</legend>
+                        <label for="waste-amount">Weekly Waste (kg):</label>
+                        <input type="number" id="waste-amount" name="waste-amount" required min="0">
+                        <div>
+                            <input type="checkbox" id="recycling" name="recycling">
+                            <label for="recycling">Do you recycle?</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="composting" name="composting">
+                            <label for="composting">Do you compost?</label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Food Consumption</legend>
+                        <label for="diet">Dietary Choice:</label>
+                        <select id="diet" name="diet" required>
+                            <option value="omnivore">Omnivore</option>
+                            <option value="vegetarian">Vegetarian</option>
+                            <option value="vegan">Vegan</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Water Consumption</legend>
+                        <label for="water-usage">Daily Water Usage (Liters):</label>
+                        <input type="number" id="water-usage" name="water-usage" required min="0">
+                    </fieldset>
+
+                    <button type="submit">Calculate Carbon Footprint</button>
+                </form>
+            </section>
+
+            <section id="company-form" class="hidden">
+                <h2>Company Carbon Footprint Calculator</h2>
+                <form id="company-carbon-form">
+                    <fieldset>
+                        <legend>Business Operations</legend>
+                        <label for="electricity-usage">Monthly Electricity Usage (kWh):</label>
+                        <input type="number" id="electricity-usage" name="electricity-usage" required min="0">
+                        <label for="fuel-consumption">Monthly Fuel Consumption (Liters):</label>
+                        <input type="number" id="fuel-consumption" name="fuel-consumption" required min="0">
+                        <label for="waste-production">Monthly Waste Production (kg):</label>
+                        <input type="number" id="waste-production" name="waste-production" required min="0">
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Logistics</legend>
+                        <label for="vehicle-fleet">Number of Vehicles in Fleet:</label>
+                        <input type="number" id="vehicle-fleet" name="vehicle-fleet" required min="0">
+                        <label for="fleet-mileage">Average Monthly Mileage per Vehicle (km):</label>
+                        <input type="number" id="fleet-mileage" name="fleet-mileage" required min="0">
+                        <label for="shipping-weight">Monthly Shipping Weight (tons):</label>
+                        <input type="number" id="shipping-weight" name="shipping-weight" required min="0">
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Supply Chain (Optional)</legend>
+                        <label for="upstream-emissions">Estimated Upstream Emissions (tons CO2e):</label>
+                        <input type="number" id="upstream-emissions" name="upstream-emissions" min="0">
+                        <label for="downstream-emissions">Estimated Downstream Emissions (tons CO2e):</label>
+                        <input type="number" id="downstream-emissions" name="downstream-emissions" min="0">
+                    </fieldset>
+
+                    <button type="submit">Calculate Company Carbon Footprint</button>
+                </form>
+            </section>
+
+            <section id="results-section" class="hidden">
+                <h2>Your Carbon Footprint Results</h2>
+                <div id="total-emissions" aria-live="polite"></div>
+                <div class="chart-container">
+                    <canvas id="emissions-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="historical-chart"></canvas>
+                </div>
+                <div id="insights" aria-live="polite"></div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2023 Advanced Carbon Footprint Calculator. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
